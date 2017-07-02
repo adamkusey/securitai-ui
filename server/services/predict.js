@@ -11,7 +11,7 @@ const model = new KerasJS.Model({
   filesystem: true
 });
 
-export function predict(logEntry) {
+export function predictMaliciousRequest(logEntry) {
   model.ready()
     .then(() => {
       const maxInputLength = 1024;
@@ -36,8 +36,10 @@ export function predict(logEntry) {
         'input': paddedSequence
       });
     })
-    .then(outputdata => {
-      console.log(outputdata);
+    .then(prediction => {
+      if (_.size(prediction.output) > 0) {
+        console.log(`Malicious request confidence: ${(prediction.output[0] * 100).toFixed(2)}%`);
+      }
     })
     .catch(err => {
       console.log(err);

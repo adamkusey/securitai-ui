@@ -1,4 +1,4 @@
-import { predict } from '../services/predict';
+import { predictMaliciousRequest } from '../services/predict';
 
 export const root = {
   path: '/',
@@ -10,6 +10,6 @@ export const process = {
   path: '/process',
   method: 'POST',
   handler: (req, res) => {
-    res(predict(req.payload));
+    res(predictMaliciousRequest(req.payload));
   }
 }
