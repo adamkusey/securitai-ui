@@ -15,16 +15,25 @@ export function predict(logEntry) {
   model.ready()
     .then(() => {
       const maxInputLength = 1024;
-      let fitToSequence = new Float32Array(maxInputLength).fill(0);
-      _.forEach(JSON.stringify(logEntry, null, 1).split(' '), (item, index) => {
+      let logToSequence = [];
+      let paddedSequence = new Float32Array(maxInputLength).fill(0);
+
+      // Extract and tokenize log contents from word dictionary
+      _.forEach(JSON.stringify(logEntry, null, 1).replace(/\n/g,' ').split(' '), (item) => {
         const key = item.toLowerCase();
-        fitToSequence[maxInputLength-1 - index] = wordDict[key] ? wordDict[key] : 0;
+        if (wordDict[key]) {
+          logToSequence.push(wordDict[key]);
+        }
       });
-      // for (let i = maxInputLength; i > 940; i--) {
-      //   console.log(fitToSequence[i]);
-      // }
+
+      // Fit log sequence to paddedSequence
+      for (let i = logToSequence.length; i > -1; i--) {
+        const revPos = paddedSequence.length - (logToSequence.length - i);
+        paddedSequence[revPos] = logToSequence[i];
+      }
+
       return model.predict({
-        'input': fitToSequence
+        'input': paddedSequence
       });
     })
     .then(outputdata => {
