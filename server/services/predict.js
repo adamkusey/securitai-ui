@@ -1,5 +1,6 @@
 import * as KerasJS from 'keras-js';
 import _ from 'lodash';
+import { storePrediction } from './store';
 import wordDict from '../../assets/word-dictionary.json';
 
 const model = new KerasJS.Model({
@@ -11,7 +12,7 @@ const model = new KerasJS.Model({
   filesystem: true
 });
 
-export function predictMaliciousRequest(logEntry) {
+export function predictMaliciousRequest(requestLog) {
   model.ready()
     .then(() => {
       const maxInputLength = 1024;
@@ -19,7 +20,7 @@ export function predictMaliciousRequest(logEntry) {
       let paddedSequence = new Float32Array(maxInputLength).fill(0);
 
       // Extract and tokenize log contents from word dictionary
-      _.forEach(JSON.stringify(logEntry, null, 1).replace(/\n/g,' ').split(' '), (item) => {
+      _.forEach(JSON.stringify(requestLog, null, 1).replace(/\n/g,' ').split(' '), (item) => {
         const key = item.toLowerCase();
         if (wordDict[key]) {
           logToSequence.push(wordDict[key]);
@@ -39,6 +40,7 @@ export function predictMaliciousRequest(logEntry) {
     .then(prediction => {
       if (_.size(prediction.output) > 0) {
         console.log(`Malicious request confidence: ${(prediction.output[0] * 100).toFixed(2)}%`);
+        storePrediction(requestLog, prediction.output[0]);
       }
     })
     .catch(err => {
