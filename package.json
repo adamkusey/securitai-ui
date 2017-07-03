@@ -16,6 +16,7 @@
   "dependencies": {
     "async": "^2.4.1",
     "autoprefixer": "^6.5.3",
+    "aws-sdk": "^2.80.0",
     "babel-core": "^6.24.1",
     "babel-loader": "^6.2.4",
     "babel-plugin-transform-runtime": "^6.6.0",
@@ -38,6 +39,7 @@
     "inert": "^4.0.2",
     "keras-js": "^0.3.0",
     "lodash": "^4.17.4",
+    "lowdb": "^0.16.2",
     "node-sass": "^4.5.3",
     "postcss-loader": "^1.1.1",
     "qwest": "4.4.5",
@@ -55,6 +57,7 @@
     "sass-loader": "^6.0.6",
     "sinon": "^2.3.5",
     "vision": "^4.1.0",
+    "uuid": "^3.1.0",
     "webpack": "^2.2",
     "webpack-dev-server": "^2.2"
   },

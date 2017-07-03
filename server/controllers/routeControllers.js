@@ -1,4 +1,5 @@
-import { predict } from '../services/predict';
+import { predictMaliciousRequest } from '../services/predict';
+import { getGoodRequests, getBadRequests } from '../services/store';
 
 export const root = {
   path: '/api/',
@@ -10,6 +11,22 @@ export const process = {
   path: '/api/process',
   method: 'POST',
   handler: (req, res) => {
-    res(predict(req.payload));
+    res(predictMaliciousRequest(req.payload));
   }
-}
+};
+
+export const goodRequests = {
+  path: '/good',
+  method: 'GET',
+  handler: (req, res) => {
+    res(getGoodRequests());
+  }
+};
+
+export const badRequests = {
+  path: '/bad',
+  method: 'GET',
+  handler: (req, res) => {
+    res(getBadRequests());
+  }
+};
