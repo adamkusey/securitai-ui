@@ -1,0 +1,13 @@
+@import 'globals';
+
+@mixin mobile-sm {
+    @media (max-width: 320px) {
+        @content;
+    }
+}
+
+@mixin mobile {
+    @media (max-width: 768px) {
+        @content;
+    }
+}

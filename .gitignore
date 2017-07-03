@@ -4,3 +4,4 @@ npm-debug.log
 /logs
 *.csv
 stored-requests.json
+.build

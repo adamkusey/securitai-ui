@@ -1,0 +1,9 @@
+@import '../../sass/globals';
+@import '../../sass/mixins';
+
+.ui-header {
+    height: $header-height;
+    padding: 15px 0;
+    position: relative;
+    margin: auto;
+}
