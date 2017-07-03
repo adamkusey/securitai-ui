@@ -16,7 +16,7 @@ export const process = {
 };
 
 export const goodRequests = {
-  path: '/good',
+  path: '/api/good',
   method: 'GET',
   handler: (req, res) => {
     res(getGoodRequests());
@@ -24,7 +24,7 @@ export const goodRequests = {
 };
 
 export const badRequests = {
-  path: '/bad',
+  path: '/api/bad',
   method: 'GET',
   handler: (req, res) => {
     res(getBadRequests());
