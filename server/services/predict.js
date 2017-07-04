@@ -1,13 +1,15 @@
 import * as KerasJS from 'keras-js';
 import _ from 'lodash';
 import { storePrediction } from './store';
-import wordDict from '../../assets/word-dictionary.json';
 
+const config = process.env.PROD ? require('../config/prod') : require('../config/dev');
+
+const wordDict = require(config.wordDict);
 const model = new KerasJS.Model({
   filepaths: {
-    model: `${__dirname}/../../assets/model_dev.json`,
-    weights: `${__dirname}/../../assets/model_weights_dev.buf`,
-    metadata: `${__dirname}/../../assets/model_metadata_dev.json`
+    model: config.model,
+    weights: config.weights,
+    metadata: config.metadata
   },
   filesystem: true
 });
