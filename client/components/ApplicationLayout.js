@@ -8,6 +8,7 @@ class ApplicationLayout extends Component {
 
         return (
             <div style={{ height: '100%' }}>
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css"/>
                 <Header />
 
                 <div className="app-container">
