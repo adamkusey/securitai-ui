@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Activity from '../activity/Activity.js';
+import Activity from '../../containers/activity/ActivityContainer.js';
 import { Col } from 'react-bootstrap';
 
 class Dashboard extends Component {
