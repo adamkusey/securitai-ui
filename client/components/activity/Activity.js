@@ -28,19 +28,15 @@ class Activity extends Component {
     constructor(props) {
         super(props);
         props.loadActivity();
+        this.startPoll();
     }
 
     handleClear = () => {
         this.props.clearActivity();
-        renderActivity(this.props.activity);
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (this.props.activity !== nextProps.activity) {
-            clearTimeout(this.timeout);
-            renderActivity(nextProps.activity);
-            this.startPoll();
-        }
+    componentWillUnmount() {
+        clearTimeout(this.timeout);
     }
 
     startPoll() {
