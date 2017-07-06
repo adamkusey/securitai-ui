@@ -36,11 +36,11 @@ export function getAllRequests() {
 }
 
 export function getGoodRequests() {
-  return db.get('requests.good').value();
+  return db.get('requests.good').value() || [];
 }
 
 export function getBadRequests() {
-  return db.get('requests.bad').value();
+  return db.get('requests.bad').value() || [];
 }
 
 export function resetRequests() {
