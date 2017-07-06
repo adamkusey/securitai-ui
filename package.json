@@ -8,9 +8,7 @@
     "webpack:watch": "webpack -d --watch",
     "start": "node ./index.js",
     "start:watch": "nodemon --exec 'node ./index.js'",
-    "start:dev": "set NODE_ENV=dev&& npm-run-all --parallel webpack:watch start:watch",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "setStatic": "echo \"Error: no test specified\" && exit 1"
+    "start:dev": "set NODE_ENV=dev&& npm-run-all --parallel webpack:watch start:watch"
   },
   "author": "",
   "license": "ISC",
