@@ -7,9 +7,6 @@ require('./activity.scss');
 function renderActivity(activity) {
     return activity.map((item, index) => (
         <tr key={item.id || index}>
-            <td>
-                <img src='/static/images/hacker.png'/>
-            </td>
             <td>{moment(item.log.timestamp).format('YYYY-MM-DD HH:mm:ss')}</td>
             <td>{item.log.source.remoteAddress}</td>
             <td>
@@ -45,7 +42,6 @@ class Activity extends Component {
                 <table className="activity-table">
                     <thead>
                         <tr>
-                            <th>User</th>
                             <th>Timestamp</th>
                             <th>IP</th>
                             <th>Request</th>
