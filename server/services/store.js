@@ -42,3 +42,9 @@ export function getGoodRequests() {
 export function getBadRequests() {
   return db.get('requests.bad').value();
 }
+
+export function resetRequests() {
+  return db.set('requests.good', [])
+    .set('requests.bad', [])
+    .write();
+}

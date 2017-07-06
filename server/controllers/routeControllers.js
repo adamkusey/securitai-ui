@@ -1,5 +1,5 @@
 import { predictMaliciousRequest } from '../services/predict';
-import { getGoodRequests, getBadRequests, getAllRequests } from '../services/store';
+import { resetRequests, getGoodRequests, getBadRequests, getAllRequests } from '../services/store';
 
 export const root = {
   path: '/api/',
@@ -36,5 +36,13 @@ export const badRequests = {
   method: 'GET',
   handler: (req, res) => {
     res(getBadRequests());
+  }
+};
+
+export const clearRequests = {
+  path: '/api/requests',
+  method: 'DELETE',
+  handler: (req, res) => {
+    res(resetRequests());
   }
 };

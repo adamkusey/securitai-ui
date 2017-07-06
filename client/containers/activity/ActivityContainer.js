@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import Activity from '../../components/activity/Activity';
-import { loadActivity } from '../../redux/actions/activityCreator';
+import { loadActivity, clearActivity } from '../../redux/actions/activityCreator';
 
 const mapStateToProps = (state) => ({
     activity: state.activity,
     translations: state.translations
 });
 
-export default connect(mapStateToProps, { loadActivity })(Activity);
+export default connect(mapStateToProps, { loadActivity, clearActivity })(Activity);

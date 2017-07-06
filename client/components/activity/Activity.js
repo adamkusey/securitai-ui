@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Col } from 'react-bootstrap';
+import { Grid, Row, Col, ButtonToolbar, Button } from 'react-bootstrap';
 import JSONTree from 'react-json-tree'
 import moment from 'moment'
 require('./activity.scss');
@@ -30,30 +30,63 @@ class Activity extends Component {
         props.loadActivity();
     }
 
+    handleClear = () => {
+        this.props.clearActivity();
+        renderActivity(this.props.activity);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.activity !== nextProps.activity) {
+            clearTimeout(this.timeout);
+            renderActivity(nextProps.activity);
+            this.startPoll();
+        }
+    }
+
+    startPoll() {
+        const POLLING_SECONDS = 10 * 1000;
+        this.timeout = setTimeout(() => this.props.loadActivity(), POLLING_SECONDS);
+    }
+
     render() {
         const { activity } = this.props;
 
         if (!activity || !activity.length) {
-            return null;
+            return (
+                <Col xs={12}>
+                    <h4>There are no suspicious requests to show.</h4>
+                </Col>
+            );
         }
 
         return (
-            <Col xs={12}>
-                <table className="activity-table">
-                    <thead>
-                        <tr>
-                            <th>Timestamp</th>
-                            <th>IP</th>
-                            <th>Request</th>
-                            <th>Confidence</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {renderActivity(activity)}
-                    </tbody>
-                </table>
-            </Col>
+          <Grid>
+              <Row>
+                  <Col xs={6} xsOffset={6}>
+                      <ButtonToolbar>
+                          <Button bsStyle="primary" className="pull-right" onClick={this.handleClear}>Clear</Button>
+                      </ButtonToolbar>
+                  </Col>
+              </Row>
+              <Row>
+                  <Col xs={12}>
+                      <table className="activity-table">
+                          <thead>
+                              <tr>
+                                  <th>Timestamp</th>
+                                  <th>IP</th>
+                                  <th>Request</th>
+                                  <th>Confidence</th>
+                                  <th>Actions</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              {renderActivity(activity)}
+                          </tbody>
+                      </table>
+                  </Col>
+              </Row>
+          </Grid>
         );
     }
 }

@@ -1,4 +1,4 @@
-import { getActivity } from '../../services/activityService';
+import { getActivity, deleteActivity } from '../../services/activityService';
 import { showLoader, hideLoader } from './loadingCreator';
 
 export const ACTIVITY_LOADED = 'ACTIVITY_LOADED';
@@ -9,6 +9,18 @@ export const activityLoaded = (activity) => {
         payload: activity
     }
 };
+
+export const clearActivity = () => {
+    return (dispatch) => {
+        return deleteActivity({}, (err, data) => {
+            if (!err) {
+                dispatch(loadActivity());
+            } else {
+                throw(err);
+            }
+        });
+    }
+}
 
 export const loadActivity = () => {
     return (dispatch) => {
