@@ -1,6 +1,12 @@
+.no-results{
+    text-align: center;
+}
+
 .activity-table {
     color: #ddd;
     width: 100%;
+    margin-top: 10px;
+    box-shadow: 0px 0px 3px #888;
 
     th {
         text-align: center;
@@ -18,6 +24,24 @@
 
         img {
             width: 25px;
+        }
+    }
+
+    thead {
+        tr {
+            background-color: rgb(0, 43, 54) !important;
+        }
+    }
+
+    tr:nth-of-type(even) {
+        background-color: rgb(0, 43, 54);
+    }
+
+    tr:nth-of-type(odd) {
+        background-color: rgb(0, 66, 77);
+
+        ul {
+            background-color: rgb(0, 66, 77) !important;
         }
     }
 

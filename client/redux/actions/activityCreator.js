@@ -24,14 +24,14 @@ export const clearActivity = () => {
 
 export const loadActivity = () => {
     return (dispatch) => {
-        dispatch(showLoader());
+        // dispatch(showLoader());
         return getActivity((err, data) => {
             if (!err) {
                 dispatch(activityLoaded(data));
             } else {
                 throw(err);
             }
-            dispatch(hideLoader());
+            // dispatch(hideLoader());
         });
     }
 }

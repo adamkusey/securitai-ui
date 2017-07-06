@@ -11,6 +11,7 @@ class App extends Component {
                 <title>SecuritAI!</title>
                 <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon"/>
                 <link rel="stylesheet" href="/static/app.css"/>
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css"/>
             </head>
             <body>
             <div id="app"/>

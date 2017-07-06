@@ -1,18 +1,24 @@
 import React, { Component } from 'react';
 import Activity from '../../containers/activity/ActivityContainer.js';
-import { Grid, Row, Col } from 'react-bootstrap';
+import { Grid, Row, Col, ButtonToolbar, Button } from 'react-bootstrap';
+require('./dashboard.scss');
 
 class Dashboard extends Component {
     render() {
         return (
-          <Grid>
-              <Row>
-                  <Col xs={12}>
-                      <h2>Dashboard</h2>
-                      <Activity/>
-                  </Col>
-              </Row>
-          </Grid>
+            <Grid className="dashboard">
+                <Row>
+                    <Col xs={6}>
+                        <h2>Dashboard</h2>
+                    </Col>
+                    <Col xs={6} className="actions">
+                        <ButtonToolbar>
+                            <Button bsStyle="primary" className="pull-right" onClick={this.props.clearActivity}>Clear</Button>
+                        </ButtonToolbar>
+                    </Col>
+                </Row>
+                <Activity/>
+            </Grid>
         );
     }
 }

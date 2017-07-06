@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Row, Col, ButtonToolbar, Button } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import JSONTree from 'react-json-tree'
 import moment from 'moment'
 require('./activity.scss');
@@ -31,39 +31,32 @@ class Activity extends Component {
         this.startPoll();
     }
 
-    handleClear = () => {
-        this.props.clearActivity();
-    }
-
     componentWillUnmount() {
         clearTimeout(this.timeout);
     }
 
     startPoll() {
-        const POLLING_SECONDS = 10 * 1000;
-        this.timeout = setTimeout(() => this.props.loadActivity(), POLLING_SECONDS);
+        const POLLING_SECONDS = 1 * 1000;
+        this.timeout = setTimeout(() => {
+            this.props.loadActivity();
+            this.startPoll();
+        }, POLLING_SECONDS);
     }
 
     render() {
         const { activity } = this.props;
 
-        if (!activity || !activity.length) {
+        if (!activity) return null;
+
+        if (!activity.length) {
             return (
-                <Col xs={12}>
+                <Col xs={12} className="no-results">
                     <h4>There are no suspicious requests to show.</h4>
                 </Col>
             );
         }
 
         return (
-          <Grid>
-              <Row>
-                  <Col xs={6} xsOffset={6}>
-                      <ButtonToolbar>
-                          <Button bsStyle="primary" className="pull-right" onClick={this.handleClear}>Clear</Button>
-                      </ButtonToolbar>
-                  </Col>
-              </Row>
               <Row>
                   <Col xs={12}>
                       <table className="activity-table">
@@ -82,7 +75,6 @@ class Activity extends Component {
                       </table>
                   </Col>
               </Row>
-          </Grid>
         );
     }
 }
