@@ -1,5 +1,5 @@
 import { predictMaliciousRequest } from '../services/predict';
-import { getGoodRequests, getBadRequests } from '../services/store';
+import { getGoodRequests, getBadRequests, getAllRequests } from '../services/store';
 
 export const root = {
   path: '/api/',
@@ -15,8 +15,16 @@ export const process = {
   }
 };
 
+export const requests = {
+  path: '/api/requests',
+  method: 'GET',
+  handler: (req, res) => {
+    res(getAllRequests());
+  }
+};
+
 export const goodRequests = {
-  path: '/api/good',
+  path: '/api/requests/good',
   method: 'GET',
   handler: (req, res) => {
     res(getGoodRequests());
@@ -24,7 +32,7 @@ export const goodRequests = {
 };
 
 export const badRequests = {
-  path: '/api/bad',
+  path: '/api/requests/bad',
   method: 'GET',
   handler: (req, res) => {
     res(getBadRequests());

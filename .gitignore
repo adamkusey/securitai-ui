@@ -4,4 +4,5 @@ npm-debug.log
 /logs
 *.csv
 stored-requests.json
-.build
+.build/app.bundle.js
+.build/app.css

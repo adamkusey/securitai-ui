@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import Activity from '../../components/activity/Activity';
+import { loadActivity } from '../../redux/actions/activityCreator';
 
-const mapStateToProps = (state) => {
-    return {
-        malicious: state.activity.malicious || [],
-        translations: state.translations}
-    };
+const mapStateToProps = (state) => ({
+    activity: state.activity,
+    translations: state.translations
+});
 
-export default connect(mapStateToProps)(Activity);
+export default connect(mapStateToProps, { loadActivity })(Activity);

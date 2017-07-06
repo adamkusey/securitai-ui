@@ -1,13 +1,11 @@
-import { LOAD_MALICIOUS_ACTIVITY_SUCCESS } from '../actions/activityCreator';
+import { ACTIVITY_LOADED } from '../actions/activityCreator';
 
-const initialState = {};
+const initialState = null;
 
 export default function reduce(state = initialState, action) {
     switch (action.type) {
-      case LOAD_MALICIOUS_ACTIVITY_SUCCESS:
-          return Object.assign({}, state, {
-            malicious: action.payload
-          });
+      case ACTIVITY_LOADED:
+          return action.payload;
       default:
           return state;
     }

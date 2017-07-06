@@ -26,6 +26,15 @@ export function storePrediction(requestLog, confidence) {
     .write();
 }
 
+export function getAllRequests() {
+    const data = db.get('requests').value();
+    const requests = data.bad.map(item => {
+        item.attack = true;
+        return item;
+    });
+    return requests.concat(data.good);
+}
+
 export function getGoodRequests() {
   return db.get('requests.good').value();
 }

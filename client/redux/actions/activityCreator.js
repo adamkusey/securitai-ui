@@ -1,28 +1,25 @@
-import { get } from '../../services/requestService';
+import { getActivity } from '../../services/activityService';
+import { showLoader, hideLoader } from './loadingCreator';
 
-export const LOAD_MALICIOUS_ACTIVITY_SUCCESS = 'LOAD_MALICIOUS_ACTIVITY_SUCCESS';
-export const LOAD_MALICIOUS_ACTIVITY = 'LOAD_MALICIOUS_ACTIVITY';
+export const ACTIVITY_LOADED = 'ACTIVITY_LOADED';
 
-export const loadMaliciousActivitySuccess = (activity) => {
+export const activityLoaded = (activity) => {
     return {
-        type: 'LOAD_MALICIOUS_ACTIVITY_SUCCESS',
+        type: ACTIVITY_LOADED,
         payload: activity
     }
 };
 
-export const loadMaliciousActivity = () => {
+export const loadActivity = () => {
     return (dispatch) => {
-        return get('http://localhost:8081/api/bad', (err, data) => {
+        dispatch(showLoader());
+        return getActivity((err, data) => {
             if (!err) {
-                dispatch(loadMaliciousActivitySuccess(data));
+                dispatch(activityLoaded(data));
             } else {
                 throw(err);
             }
-        })
+            dispatch(hideLoader());
+        });
     }
-}
-
-export const actions = {
-  loadMaliciousActivitySuccess,
-  loadMaliciousActivity
 }

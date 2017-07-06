@@ -1,36 +1,62 @@
 import React, { Component } from 'react';
-import { Col, Table } from 'react-bootstrap';
-import { get } from '../../services/requestService';
-import { loadMaliciousActivity } from '../../redux/actions/activityCreator';
+import { Col } from 'react-bootstrap';
+import JSONTree from 'react-json-tree'
+import moment from 'moment'
+require('./activity.scss');
+
+function renderActivity(activity) {
+    return activity.map((item, index) => (
+        <tr key={item.id || index}>
+            <td>
+                <img src='/static/images/hacker.png'/>
+            </td>
+            <td>{moment(item.log.timestamp).format('YYYY-MM-DD HH:mm:ss')}</td>
+            <td>{item.log.source.remoteAddress}</td>
+            <td>
+                <JSONTree
+                    data={item.log}
+                    shouldExpandNode={() => false}
+                />
+            </td>
+            <td>{(item.confidence * 100).toFixed(2)}%</td>
+            <td>
+                <button type="button" title="Block IP"><img src='/static/images/hacker-block.png'/></button>
+                <button type="button" title="Email Details"><img src='/static/images/email.ico' className="email" /></button>
+            </td>
+        </tr>
+    ));
+}
 
 class Activity extends Component {
-    constructor() {
-        super();
-        this.badActivityRows = [];
-    }
-
-    componentWillReceiveProps(props) {
-        if (props.malicious) {
-            props.malicious.forEach(item => {
-                this.badActivityRows.push(<tr><td>{JSON.stringify(item.log)}</td><td>{(item.confidence * 100).toFixed(2)}%</td></tr>);
-            });
-        }
+    constructor(props) {
+        super(props);
+        props.loadActivity();
     }
 
     render() {
+        const { activity } = this.props;
+
+        if (!activity || !activity.length) {
+            return null;
+        }
+
         return (
             <Col xs={12}>
-                <Table striped bordered>
+                <table className="activity-table">
                     <thead>
                         <tr>
-                            <th>Suspicious Requests</th>
+                            <th>User</th>
+                            <th>Timestamp</th>
+                            <th>IP</th>
+                            <th>Request</th>
                             <th>Confidence</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {this.badActivityRows}
+                        {renderActivity(activity)}
                     </tbody>
-                </Table>
+                </table>
             </Col>
         );
     }

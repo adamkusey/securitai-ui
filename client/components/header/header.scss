@@ -2,8 +2,16 @@
 @import '../../sass/mixins';
 
 .ui-header {
-    height: $header-height;
+    color: #fff;
+    font-size: 30px;
     padding: 15px 0;
     position: relative;
     margin: auto;
+    text-align: center;
+    background-color: #0056b7;
+
+    img {
+        width: 40px;
+        margin-right: 10px;
+    }
 }
