@@ -5,7 +5,7 @@ class Header extends Component {
     render() {
         return (
             <header className="ui-header">
-                <img src='/static/images/securitai-temp-logo.png'/>
+                <img src='/static/images/securitai-logo.png'/>
             </header>
         );
     }
