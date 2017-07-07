@@ -8,7 +8,7 @@ AWS.config.update({region: 'us-east-2'});
 const kinesis = new AWS.Kinesis();
 const StreamName = 'SecuritAILogs';
 const KINESIS_POINTER_FILE = 'kinesisPointer';
-const RETRY_TIME_IN_SECONDS = 2;
+const RETRY_TIME_IN_SECONDS = 1;
 const RETRY_TIME_IN_MS = RETRY_TIME_IN_SECONDS * 1000;
 
 let shardId;
