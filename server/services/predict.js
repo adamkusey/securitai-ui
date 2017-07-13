@@ -15,12 +15,13 @@ const model = new KerasJS.Model({
 });
 
 export function predictMaliciousRequest(requestLog) {
+  let parsedLog = JSON.parse(requestLog);
+
   model.ready()
     .then(() => {
       const maxInputLength = 1024;
       let logToSequence = [];
       let paddedSequence = new Float32Array(maxInputLength).fill(0);
-      let parsedLog = JSON.parse(requestLog);
 
       // Extract and tokenize log contents from word dictionary
       _.forEach(JSON.stringify(parsedLog, null, 1).replace(/\n/g,' ').split(' '), (item) => {
