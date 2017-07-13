@@ -15,6 +15,8 @@ const model = new KerasJS.Model({
 });
 
 export function predictMaliciousRequest(requestLog) {
+  let parsedLog = JSON.parse(requestLog);
+
   model.ready()
     .then(() => {
       const maxInputLength = 1024;
@@ -22,7 +24,7 @@ export function predictMaliciousRequest(requestLog) {
       let paddedSequence = new Float32Array(maxInputLength).fill(0);
 
       // Extract and tokenize log contents from word dictionary
-      _.forEach(JSON.stringify(requestLog, null, 1).replace(/\n/g,' ').split(' '), (item) => {
+      _.forEach(JSON.stringify(parsedLog, null, 1).replace(/\n/g,' ').split(' '), (item) => {
         const key = item.toLowerCase();
         if (wordDict[key]) {
           logToSequence.push(wordDict[key]);
@@ -42,7 +44,7 @@ export function predictMaliciousRequest(requestLog) {
     .then(prediction => {
       if (_.size(prediction.output) > 0) {
         console.log(`Malicious request confidence: ${(prediction.output[0] * 100).toFixed(2)}%`);
-        storePrediction(requestLog, prediction.output[0]);
+        storePrediction(parsedLog, prediction.output[0]);
       }
     })
     .catch(err => {
