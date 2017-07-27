@@ -1,6 +1,6 @@
 import * as KerasJS from 'keras-js';
 import _ from 'lodash';
-import { storePrediction } from './store';
+import { storePrediction } from './localStore';
 
 const config = process.env.PROD ? require('../config/prod') : require('../config/dev');
 

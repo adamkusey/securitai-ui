@@ -4,7 +4,7 @@ import JSONTree from 'react-json-tree'
 import moment from 'moment'
 require('./activity.scss');
 
-function renderActivity(activity) {
+function renderActivity(activity, blacklistIp) {
     return activity.map((item, index) => (
         <tr key={item.id || index}>
             <td>{moment(item.log.timestamp).format('YYYY-MM-DD HH:mm:ss')}</td>
@@ -17,7 +17,7 @@ function renderActivity(activity) {
             </td>
             <td>{(item.confidence * 100).toFixed(2)}%</td>
             <td>
-                <button type="button" title="Block IP"><img src='/static/images/hacker-block.png'/></button>
+                <button type="button" title="Block IP" onClick={() => blacklistIp(item.log.source.remoteAddress)}><img src='/static/images/hacker-block.png'/></button>
                 <button type="button" title="Email Details"><img src='/static/images/email.ico' className="email" /></button>
             </td>
         </tr>
@@ -44,7 +44,7 @@ class Activity extends Component {
     }
 
     render() {
-        const { activity } = this.props;
+        const { activity, blacklistIp } = this.props;
 
         if (!activity) return null;
 
@@ -70,7 +70,7 @@ class Activity extends Component {
                               </tr>
                           </thead>
                           <tbody>
-                              {renderActivity(activity)}
+                              {renderActivity(activity, blacklistIp)}
                           </tbody>
                       </table>
                   </Col>

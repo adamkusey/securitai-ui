@@ -1,5 +1,7 @@
+import Boom from 'boom';
 import { predictMaliciousRequest } from '../services/predict';
-import { resetRequests, getGoodRequests, getBadRequests, getAllRequests } from '../services/store';
+import { resetRequests, getGoodRequests, getBadRequests, getAllRequests } from '../services/localStore';
+import { insertBlacklistIp } from '../services/dynamodb';
 
 export const root = {
   path: '/api/',
@@ -44,5 +46,18 @@ export const clearRequests = {
   method: 'DELETE',
   handler: (req, res) => {
     res(resetRequests());
+  }
+};
+
+export const blacklistIp = {
+  path: '/api/blacklist',
+  method: 'POST',
+  handler: (req, res) => {
+    const ip = req.payload.ip;
+    if (ip) {
+      res(insertBlacklistIp(ip));
+    } else {
+      res(Boom.badRequest('IP to blacklist required'));
+    }
   }
 };
