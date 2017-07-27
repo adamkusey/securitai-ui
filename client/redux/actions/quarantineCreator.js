@@ -5,7 +5,7 @@ export const blacklistIp = (ip) => {
         return postBlacklistIp({ip: ip}, (err, data) => {
             if (!err) {
                 // Notify user somehow... toastr msg?
-                alert('IP Blacklisted');
+                alert(`${ip} Blacklisted`);
             } else {
                 throw(err);
             }
