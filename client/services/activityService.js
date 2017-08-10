@@ -1,7 +1,7 @@
 import { get, del } from './requestService';
 
 export function getActivity(callback) {
-    get('/api/requests/bad', callback);
+    get('/api/requests', callback);
 }
 
 export function deleteActivity(data, callback) {

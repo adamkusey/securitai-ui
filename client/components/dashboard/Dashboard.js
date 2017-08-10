@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Activity from '../../containers/activity/ActivityContainer.js';
+import Activity from '../../containers/activity/ActivityContainer';
+import Charts from '../../containers/charts/ChartsContainer';
 import { Grid, Row, Col, ButtonToolbar, Button } from 'react-bootstrap';
 require('./dashboard.scss');
 
@@ -17,6 +18,7 @@ class Dashboard extends Component {
                         </ButtonToolbar>
                     </Col>
                 </Row>
+                <Charts/>
                 <Activity/>
             </Grid>
         );

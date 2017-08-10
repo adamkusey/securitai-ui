@@ -4,7 +4,7 @@ import { loadActivity } from '../../redux/actions/activityCreator';
 import { blacklistIp } from '../../redux/actions/quarantineCreator';
 
 const mapStateToProps = (state) => ({
-    activity: state.activity,
+    activity: state.activity && state.activity.bad,
     translations: state.translations
 });
 
