@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Button, Glyphicon } from 'react-bootstrap';
 import JSONTree from 'react-json-tree'
 import moment from 'moment'
 require('./activity.scss');
 
-function renderActivity(activity, blacklistIp) {
+function renderActivity(activity, blacklistIp, safeRequest) {
     return activity.map((item, index) => (
         <tr key={item.id || index}>
             <td>{moment(item.log.timestamp).format('YYYY-MM-DD HH:mm:ss')}</td>
@@ -19,6 +19,9 @@ function renderActivity(activity, blacklistIp) {
             <td>
                 <button type="button" title="Block IP" onClick={() => blacklistIp(item.log.source.remoteAddress)}><img src='/static/images/hacker-block.png'/></button>
                 <button type="button" title="Email Details"><img src='/static/images/email.ico' className="email" /></button>
+                <Button bsSize="xsmall" bsClass="no-threat-btn" onClick={() => safeRequest(item.id)}>
+                    <Glyphicon glyph="check" />
+                </Button>
             </td>
         </tr>
     ));
@@ -44,7 +47,7 @@ class Activity extends Component {
     }
 
     render() {
-        const { activity, blacklistIp } = this.props;
+        const { activity, blacklistIp, safeRequest } = this.props;
 
         if (!activity) return null;
 
@@ -70,7 +73,7 @@ class Activity extends Component {
                               </tr>
                           </thead>
                           <tbody>
-                              {renderActivity(activity, blacklistIp)}
+                              {renderActivity(activity, blacklistIp, safeRequest)}
                           </tbody>
                       </table>
                   </Col>

@@ -59,7 +59,7 @@
     }
 
     td:nth-of-type(5) {
-        width: 105px;
+        width: 130px;
         text-align: center;
 
         button {
@@ -71,5 +71,11 @@
         .email {
             width: 30px;
         }
+    }
+
+    .no-threat-btn {
+      span:hover {
+        color: green;
+      }
     }
 }

@@ -42,8 +42,40 @@ export function getBadRequests() {
   return db.get('requests.bad').value() || [];
 }
 
+export function getRequestById(logId) {
+  const goodReq = db.get('requests.good')
+    .find({ id: logId })
+    .value();
+  const badReq = db.get('requests.bad')
+    .find({ id: logId })
+    .value();
+  return goodReq || badReq || [];
+}
+
+export function deleteRequestById(logId) {
+  db.get('requests.good')
+    .remove({ id: logId })
+    .write();
+  db.get('requests.bad')
+    .remove({ id: logId })
+    .write();
+}
+
 export function resetRequests() {
   return db.set('requests.good', [])
     .set('requests.bad', [])
     .write();
+}
+
+export function searchRequests(reqType, fromDate, toDate) {
+  const validReqType = reqType === 'good' || reqType === 'bad';
+  if (validReqType && fromDate && toDate) {
+    return db.get(`requests.${reqType}`)
+      .filter(r => {
+        return r.log.timestamp >= fromDate
+          && r.log.timestamp <= toDate;
+      }).value() || [];
+  } else {
+    return getGoodRequests();
+  }
 }
