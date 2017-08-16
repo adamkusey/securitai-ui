@@ -2,13 +2,34 @@ import React, { Component } from 'react';
 import { Row, Col, Button, Glyphicon } from 'react-bootstrap';
 import JSONTree from 'react-json-tree'
 import moment from 'moment'
+import requestIp from 'request-ip';
 require('./activity.scss');
 
-function renderActivity(activity, blacklistIp, safeRequest) {
+function getClientIp(req) {
+    const realIpHeader = req.headers ? req.headers['x-real-ip'] : null;
+    const forwardedForHeader = req.headers ? req.headers['x-forwarded-for'] : null;
+    if (realIpHeader) {
+        return realIpHeader;
+    } else if (forwardedForHeader) {
+        const ips = forwardedForHeader.split(',');
+        return ips[ips.length - 1];
+    } else {
+        return null;
+    }
+}
+
+function buildMsg(req) {
+    const dt = moment(req.timestamp).format('YYYY-MM-DD HH:mm:ss');
+    const path = req.path;
+    const msg = `Warning! SecuritAI has detected a suspicious request against the ${path} endpoint. This occurred on ${dt}, please take precautionary action as necessary.`
+    return msg;
+}
+
+function renderActivity(activity, blacklistIp, publishNotification, safeRequest) {
     return activity.map((item, index) => (
         <tr key={item.id || index}>
             <td>{moment(item.log.timestamp).format('YYYY-MM-DD HH:mm:ss')}</td>
-            <td>{item.log.source.remoteAddress}</td>
+            <td>{getClientIp(item.log) || '-'}</td>
             <td>
                 <JSONTree
                     data={item.log}
@@ -18,7 +39,7 @@ function renderActivity(activity, blacklistIp, safeRequest) {
             <td>{(item.confidence * 100).toFixed(2)}%</td>
             <td>
                 <button type="button" title="Block IP" onClick={() => blacklistIp(item.log.source.remoteAddress)}><img src='/static/images/hacker-block.png'/></button>
-                <button type="button" title="Email Details"><img src='/static/images/email.ico' className="email" /></button>
+                <button type="button" title="Email Details" onClick={() => publishNotification(buildMsg(item.log))}><img src='/static/images/email.ico' className="email" /></button>
                 <Button bsSize="xsmall" bsClass="no-threat-btn" onClick={() => safeRequest(item.id)}>
                     <Glyphicon glyph="check" />
                 </Button>
@@ -47,7 +68,7 @@ class Activity extends Component {
     }
 
     render() {
-        const { activity, blacklistIp, safeRequest } = this.props;
+        const { activity, blacklistIp, publishNotification, safeRequest } = this.props;
 
         if (!activity) return null;
 
@@ -73,7 +94,7 @@ class Activity extends Component {
                               </tr>
                           </thead>
                           <tbody>
-                              {renderActivity(activity, blacklistIp, safeRequest)}
+                              {renderActivity(activity, blacklistIp, publishNotification, safeRequest)}
                           </tbody>
                       </table>
                   </Col>

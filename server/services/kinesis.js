@@ -3,7 +3,12 @@ import kinesis from 'kinesis';
 import { predictMaliciousRequest } from './predict';
 
 export function consume() {
-  const kinesisSource = kinesis.stream({name: 'SecuritAILogs', region: 'us-east-2'});
+  const kinesisSource = kinesis.stream({
+    name: 'SecuritAILogs',
+    region: 'us-east-2',
+    maxRetries: 6,
+    initialRetryMs: 10000
+  });
 
   let modelOutput = new stream.Writable({
     objectMode: true

@@ -13,7 +13,6 @@ function getData(requests) {
     let data = [];
 
     let coll = mapToPerMinute(requests);
-    console.log(coll);
     const grouped = _.groupBy(coll, 'log.timestamp');
     _.forEach(grouped, (value, key) => {
         data.push([parseInt(key), value.length]);
@@ -40,8 +39,8 @@ class PieChart extends Component {
                 text: ''
             },
             series: [
-                getSeries('Regular', activity.good),
-                getSeries('Malicious', activity.bad)
+                getSeries('Regular', _.cloneDeep(activity.good)),
+                getSeries('Malicious', _.cloneDeep(activity.bad))
             ]
         };
         return <ReactHighstock config={config}/>;

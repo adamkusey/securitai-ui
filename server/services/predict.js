@@ -23,7 +23,7 @@ export function predictMaliciousRequest(requestLog) {
       let paddedSequence = new Float32Array(maxInputLength).fill(0);
 
       // Choosing log properties we are interested in to process
-      const processedLog = JSON.stringify(_.pick(parsedLog, ['method','query','path','statusCode','route','requestPayload']), null, 0);
+      const processedLog = JSON.stringify(_.pick(parsedLog, ['method','query','path','statusCode','requestPayload']), null, 0);
       for (let i = 0; i < processedLog.length; i++) {
         const key = processedLog[i];
         if (wordDict[key]) {

@@ -15,6 +15,7 @@
   "dependencies": {
     "async": "^2.4.1",
     "autoprefixer": "^6.5.3",
+    "aws-sdk": "^2.99.0",
     "babel-core": "^6.24.1",
     "babel-loader": "^6.2.4",
     "babel-plugin-transform-runtime": "^6.6.0",

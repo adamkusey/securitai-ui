@@ -13,6 +13,7 @@ import {
   insertBlacklistIp,
   insertRetrainEntry
 } from '../services/dynamodb';
+import { pushSNSMessage } from '../services/notification';
 
 export const root = {
   path: '/api/',
@@ -89,6 +90,19 @@ export const retrainSample = {
       }
     } else {
       res(Boom.badRequest('Request log id and label is required'));
+    }
+  }
+}
+
+export const pushNotification = {
+  path: '/api/notification',
+  method: 'POST',
+  handler: (req, res) => {
+    const msg = req.payload.msg;
+    if (msg) {
+      res(pushSNSMessage(msg));
+    } else {
+      res(Boom.badRequest('msg payload required'));
     }
   }
 }
