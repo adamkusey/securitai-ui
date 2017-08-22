@@ -24,26 +24,33 @@ function buildMsg(req) {
     return msg;
 }
 
+function getRequest(item, className) {
+    return (
+        <div className={`activity ${className || ''}`}>
+            <JSONTree
+                data={item.log}
+                shouldExpandNode={() => false}
+            />
+        </div>
+    );
+}
+
 function renderActivity(activity, blacklistIp, publishNotification, safeRequest) {
     return activity.map((item, index) => (
-        <tr key={item.id || index}>
-            <td>{moment(item.log.timestamp).format('YYYY-MM-DD HH:mm:ss')}</td>
-            <td>{getClientIp(item.log) || '-'}</td>
-            <td>
-                <JSONTree
-                    data={item.log}
-                    shouldExpandNode={() => false}
-                />
-            </td>
-            <td>{(item.confidence * 100).toFixed(2)}%</td>
-            <td>
+        <li className="activity-li" key={item.id || index}>
+            <div className="activity">{moment(item.log.timestamp).format('YYYY-MM-DD HH:mm:ss')}</div>
+            <div className="activity">{getClientIp(item.log) || '-'}</div>
+            {getRequest(item)}
+            <div className="activity">{(item.confidence * 100).toFixed(2)}%</div>
+            <div className="activity">
                 <button type="button" title="Block IP" onClick={() => blacklistIp(item.log.source.remoteAddress)}><img src='/static/images/hacker-block-border.png'/></button>
                 <button type="button" title="Email Details" onClick={() => publishNotification(buildMsg(item.log))}><img src='/static/images/email.ico' className="email" /></button>
                 <Button bsSize="xsmall" bsClass="no-threat-btn" onClick={() => safeRequest(item.id)}>
                     <Glyphicon glyph="check" />
                 </Button>
-            </td>
-        </tr>
+            </div>
+            {getRequest(item, 'mobile')}
+        </li>
     ));
 }
 
@@ -82,20 +89,16 @@ class Activity extends Component {
         return (
               <Row>
                   <Col xs={12}>
-                      <table className="activity-table">
-                          <thead>
-                              <tr>
-                                  <th>Timestamp</th>
-                                  <th>IP</th>
-                                  <th>Request</th>
-                                  <th>Confidence</th>
-                                  <th>Actions</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              {renderActivity(activity, blacklistIp, publishNotification, safeRequest)}
-                          </tbody>
-                      </table>
+                      <ol className="activity-table">
+                          <li className="activity-li activity-header">
+                              <div className="activity">Timestamp</div>
+                              <div className="activity">IP</div>
+                              <div className="activity">Request</div>
+                              <div className="activity">Confidence</div>
+                              <div className="activity">Actions</div>
+                          </li>
+                          {renderActivity(activity, blacklistIp, publishNotification, safeRequest)}
+                      </ol>
                   </Col>
               </Row>
         );
