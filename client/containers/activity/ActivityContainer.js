@@ -5,6 +5,7 @@ import { blacklistIp, safeRequest } from '../../redux/actions/quarantineCreator'
 import { publishNotification } from '../../redux/actions/notificationCreator';
 
 const mapStateToProps = (state) => ({
+    requestId: state.routing.locationBeforeTransitions && state.routing.locationBeforeTransitions.query.requestId,
     activity: state.activity && state.activity.bad,
     translations: state.translations
 });

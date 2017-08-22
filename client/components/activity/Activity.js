@@ -17,13 +17,6 @@ function getClientIp(req) {
     }
 }
 
-function buildMsg(req) {
-    const dt = moment(req.timestamp).format('YYYY-MM-DD HH:mm:ss');
-    const path = req.path;
-    const msg = `Warning! SecuritAI has detected a suspicious request against the ${path} endpoint. This occurred on ${dt}, please take precautionary action as necessary.`
-    return msg;
-}
-
 function getRequest(item, className) {
     return (
         <div className={`activity ${className || ''}`}>
@@ -44,7 +37,7 @@ function renderActivity(activity, blacklistIp, publishNotification, safeRequest)
             <div className="activity">{(item.confidence * 100).toFixed(2)}%</div>
             <div className="activity">
                 <button type="button" title="Block IP" onClick={() => blacklistIp(item.log.source.remoteAddress)}><img src='/static/images/hacker-block-border.png'/></button>
-                <button type="button" title="Email Details" onClick={() => publishNotification(buildMsg(item.log))}><img src='/static/images/email.ico' className="email" /></button>
+                <button type="button" title="Email Details" onClick={() => publishNotification(item)}><img src='/static/images/email.ico' className="email" /></button>
                 <Button bsSize="xsmall" bsClass="no-threat-btn" onClick={() => safeRequest(item.id)}>
                     <Glyphicon glyph="check" />
                 </Button>
@@ -74,14 +67,16 @@ class Activity extends Component {
     }
 
     render() {
-        const { activity, blacklistIp, publishNotification, safeRequest } = this.props;
+        const { activity, blacklistIp, publishNotification, safeRequest, requestId } = this.props;
 
         if (!activity) return null;
 
-        if (!activity.length) {
+        const filteredActivity = requestId ? activity.filter(a => a.id === requestId) : activity;
+
+        if (!filteredActivity.length) {
             return (
                 <Col xs={12} className="no-results">
-                    <h4>There are no suspicious requests to show.</h4>
+                    <h4>There are no suspicious requests to show with the selected filters.</h4>
                 </Col>
             );
         }
@@ -97,7 +92,7 @@ class Activity extends Component {
                               <div className="activity">Confidence</div>
                               <div className="activity">Actions</div>
                           </li>
-                          {renderActivity(activity, blacklistIp, publishNotification, safeRequest)}
+                          {renderActivity(filteredActivity, blacklistIp, publishNotification, safeRequest)}
                       </ol>
                   </Col>
               </Row>
