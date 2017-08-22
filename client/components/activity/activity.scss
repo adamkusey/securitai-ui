@@ -1,12 +1,17 @@
+@import '../../sass/mixins';
+
 .no-results{
     text-align: center;
 }
 
 .activity-table {
-    color: #ddd;
+    color: #000;
     width: 100%;
-    margin-top: 10px;
-    box-shadow: 0px 0px 3px #888;
+    //margin-top: 10px;
+    //box-shadow: 0px 0px 3px #888;
+
+    border-collapse: separate;
+    border-spacing: 0 15px;
 
     th {
         text-align: center;
@@ -16,7 +21,8 @@
     td {
         vertical-align: top;
         border: 1px solid #ddd;
-        padding: 10px;
+        padding: 20px;
+        border-style: solid none;
 
         ul {
             margin: 0 !important;
@@ -25,41 +31,57 @@
         img {
             width: 25px;
         }
+
+        &:first-child {
+            border-left-style: solid;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+
+        &:last-child {
+            border-right-style: solid;
+            border-bottom-right-radius: 10px;
+            border-top-right-radius: 10px;
+        }
     }
 
     thead {
         tr {
-            background-color: rgb(0, 43, 54) !important;
+            background-color: #e0e3e8 !important;
         }
     }
 
     tr:nth-of-type(even) {
-        background-color: rgb(0, 43, 54);
+        background-color: #e0e3e8;
+
+        ul {
+            background-color: #e0e3e8 !important;
+        }
     }
 
     tr:nth-of-type(odd) {
-        background-color: rgb(0, 66, 77);
+        background-color: #fff;
 
         ul {
-            background-color: rgb(0, 66, 77) !important;
+            background-color: #fff !important;
         }
     }
 
     td:nth-of-type(1) {
-        width: 155px;
+        max-width: 175px;
     }
 
     td:nth-of-type(2) {
-        width: 85px;
+        max-width: 85px;
     }
 
     td:nth-of-type(4) {
-        width: 95px;
+        max-width: 95px;
         text-align: center;
     }
 
     td:nth-of-type(5) {
-        width: 130px;
+        max-width: 150px;
         text-align: center;
 
         button {
@@ -77,5 +99,16 @@
       span:hover {
         color: green;
       }
+    }
+
+    @include mobile {
+        th,
+        td {
+            padding: 20px 10px;
+        }
+        th:nth-of-type(3),
+        td:nth-of-type(3) {
+            display: none;
+        }
     }
 }

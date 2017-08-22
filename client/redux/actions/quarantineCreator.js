@@ -1,13 +1,14 @@
 import { postBlacklistIp, postSafeRequestEntry } from '../../services/quarantineService';
+import { showModal } from './modalCreator';
 
 export const blacklistIp = (ip) => {
     return (dispatch) => {
-        return postBlacklistIp({ip: ip}, (err, data) => {
+        return postBlacklistIp({ip: ip}, (err) => {
             if (!err) {
                 // Notify user somehow... toastr msg?
-                alert(`${ip} Blacklisted`);
+                dispatch(showModal(`The ip: "${ip}" has been added to the black list.`));
             } else {
-                throw(err);
+                dispatch(showModal('An error occurred. Please try again later.'));
             }
         })
     }
@@ -15,11 +16,11 @@ export const blacklistIp = (ip) => {
 
 export const safeRequest = (logId) => {
     return (dispatch) => {
-        return postSafeRequestEntry({logId: logId, isMalicious: false}, (err, data) => {
+        return postSafeRequestEntry({logId: logId, isMalicious: false}, (err) => {
             if (!err) {
-                alert('Request sample was added to model retraining list');
+                dispatch(showModal('Request sample was added to model retraining list.'));
             } else {
-                throw(err);
+                dispatch(showModal('An error occurred. Please try again later.'));
             }
         })
     }

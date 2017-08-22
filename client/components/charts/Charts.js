@@ -14,7 +14,7 @@ class Charts extends Component {
         if (!activity) return null;
 
         return (
-            <Row>
+            <Row className="dashboard-graphs">
                 <Col md={12} lg={7}>
                     <TimeChart activity={activity}/>
                 </Col>

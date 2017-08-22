@@ -8,7 +8,7 @@ class Dashboard extends Component {
     render() {
         return (
             <Grid className="dashboard">
-                <Row>
+                <Row className="dashboard-header">
                     <Col xs={6}>
                         <h2>Dashboard</h2>
                     </Col>

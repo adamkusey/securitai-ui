@@ -1,12 +1,13 @@
 import { postNotification } from '../../services/notificationService';
+import { showModal } from './modalCreator';
 
 export const publishNotification = (msg) => {
     return (dispatch) => {
-        return postNotification({msg: msg}, (err, data) => {
+        return postNotification({msg: msg}, (err) => {
             if (!err) {
-                alert('Notification Sent!');
+                dispatch(showModal('Notification Sent.'));
             } else {
-                throw(err);
+                dispatch(showModal('An error occurred. Please try again later.'));
             }
         })
     }

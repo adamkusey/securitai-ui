@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Row, Col, Button, Glyphicon } from 'react-bootstrap';
 import JSONTree from 'react-json-tree'
 import moment from 'moment'
-import requestIp from 'request-ip';
 require('./activity.scss');
 
 function getClientIp(req) {
@@ -38,7 +37,7 @@ function renderActivity(activity, blacklistIp, publishNotification, safeRequest)
             </td>
             <td>{(item.confidence * 100).toFixed(2)}%</td>
             <td>
-                <button type="button" title="Block IP" onClick={() => blacklistIp(item.log.source.remoteAddress)}><img src='/static/images/hacker-block.png'/></button>
+                <button type="button" title="Block IP" onClick={() => blacklistIp(item.log.source.remoteAddress)}><img src='/static/images/hacker-block-border.png'/></button>
                 <button type="button" title="Email Details" onClick={() => publishNotification(buildMsg(item.log))}><img src='/static/images/email.ico' className="email" /></button>
                 <Button bsSize="xsmall" bsClass="no-threat-btn" onClick={() => safeRequest(item.id)}>
                     <Glyphicon glyph="check" />
