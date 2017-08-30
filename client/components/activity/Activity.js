@@ -36,7 +36,7 @@ function renderActivity(activity, blacklistIp, publishNotification, safeRequest)
             {getRequest(item)}
             <div className="activity">{(item.confidence * 100).toFixed(2)}%</div>
             <div className="activity">
-                <button type="button" title="Block IP" onClick={() => blacklistIp(item.log.source.remoteAddress)}><img src='/static/images/hacker-block-border.png'/></button>
+                <button type="button" title="Block IP" onClick={() => blacklistIp(getClientIp(item.log))}><img src='/static/images/hacker-block-border.png'/></button>
                 <button type="button" title="Email Details" onClick={() => publishNotification(item)}><img src='/static/images/email.ico' className="email" /></button>
                 <Button bsSize="xsmall" bsClass="no-threat-btn" onClick={() => safeRequest(item.id)}>
                     <Glyphicon glyph="check" />

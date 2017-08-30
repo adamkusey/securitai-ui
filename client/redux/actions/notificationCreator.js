@@ -5,9 +5,9 @@ import moment from 'moment'
 function buildMsg(item) {
     const dt = moment(item.log.timestamp).format('YYYY-MM-DD HH:mm:ss');
     const path = item.log.path;
-    return `Warning! SecuritAI has detected a suspicious request against the ${path} endpoint.` +
-        `This occurred on ${dt}, please take precautionary action as necessary.` +
-        `You can view the attack and take action here: http://www.securitai.co/?requestId=${item.id}`;
+    return `😱 SecuritAI has detected a suspicious request against the ${path} endpoint.` +
+        ` This occurred on ${dt}, please take precautionary action as necessary.` +
+        ` You can view the attack and take action here: http://www.securitai.co/?requestId=${item.id}`;
 }
 
 export const publishNotification = (item) => {
