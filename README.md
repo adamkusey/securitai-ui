@@ -1,6 +1,6 @@
 ## securitai-ui
 
-SecuritAI UI application provides a platform to monitor for malicious requests from a stream of request logs. The prediction model is powered by Recurrent Neural Network developed in Keras. 
+SecuritAI UI application provides a platform to monitor for malicious requests from a stream of request logs. The prediction model is powered by Recurrent Neural Network developed with Keras as explained in [Detecting Malicious Requests Using Keras & Tensorflow](https://medium.com/slalom-engineering/detecting-malicious-requests-with-keras-tensorflow-5d5db06b4f28)
 
 #### Start dev and watch
 npm run start:dev
