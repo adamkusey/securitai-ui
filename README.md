@@ -13,7 +13,7 @@ This software has the following requirements:
 
 ## AWS Kinesis Permissions
 You will have to setup your local machine to be able to authenticate against your AWS account.
-Here are some instructions: http://docs.aws.amazon.com/cli/latest/userguide/cli-config-files.html
+More details/instructions can be found in the [AWS documentation for CLI configuration](http://docs.aws.amazon.com/cli/latest/userguide/cli-config-files.html).
 
 # Running the software
 You can run the software with the following steps:
