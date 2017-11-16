@@ -11,9 +11,17 @@ This software has the following requirements:
 - Node 6.11.0+
 - AWS Kinesis Permissions
 
-## AWS Authentication
+## AWS Kinesis Permissions
 You will have to setup your local machine to be able to authenticate against your AWS account.
 Here are some instructions: http://docs.aws.amazon.com/cli/latest/userguide/cli-config-files.html
+
+# Running the software
+You can run the software with the following steps:
+
+1. clone this repository
+2. activate your *AWS account credentials* environment variables
+3. cd into the project folder
+4. run `npm run start`
 
 # Implementation details
 This software is built with the following components:
